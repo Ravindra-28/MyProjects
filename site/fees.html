@@ -264,7 +264,8 @@
 
     function showLoggedInUI() {
       state.userName = getSavedUser();
-      document.getElementById('greetingName').textContent = state.userName;
+      const greetingEl = document.getElementById('greetingName');
+      if (greetingEl) greetingEl.textContent = state.userName;
       document.getElementById('loginPage').style.display = 'none';
       document.getElementById('dashboard').style.display = 'grid';
       updateUI();
