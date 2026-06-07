@@ -625,6 +625,7 @@
           <div>
             <h2>Login</h2>
             <p>Welcome to Ravindra's CampusSync portal. Choose your access type and sign in securely.</p>
+            <div class="login-note">Demo login: username <strong>Ravindra19</strong> / password <strong>12345678</strong></div>
           </div>
 
           <div class="pill-tabs">
@@ -801,6 +802,10 @@
       classCount: 12,
       userName: 'Student',
       role: 'Student',
+      credentials: {
+        username: 'Ravindra19',
+        password: '12345678'
+      },
       announcements: [
         'Assignment Reminder: Submit lab report by 6 PM today.',
         'Cultural Fest registration open until Friday.',
@@ -836,6 +841,10 @@
       }
       if (!robotChecked) {
         alertBox.textContent = 'Please confirm you are not a robot.';
+        return;
+      }
+      if (userInput !== state.credentials.username || passInput !== state.credentials.password) {
+        alertBox.textContent = 'Invalid credentials. Use Ravindra19 / 12345678.';
         return;
       }
       alertBox.textContent = '';
