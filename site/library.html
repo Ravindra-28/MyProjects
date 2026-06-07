@@ -667,12 +667,12 @@
           <p>AI-powered college ERP for students, faculty, and admins.</p>
         </div>
               <ul class="nav-list">
-        <li class="active"><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
         <li><a href="students.html">Students</a></li>
         <li><a href="attendance.html">Attendance</a></li>
         <li><a href="exams.html">Exams</a></li>
         <li><a href="fees.html">Fees</a></li>
-        <li><a href="library.html">Library</a></li>
+        <li class="active"><a href="library.html">Library</a></li>
         <li><a href="placement.html">Placement</a></li>
         <li><a href="support.html">Support</a></li>
       </ul>
@@ -685,11 +685,11 @@
       <main class="main">
         <section class="topbar">
           <div class="topbar-left">
-            <h2>Welcome back, <span id="greetingName">Student</span></h2>
-            <p>Campus ERP updated automatically in smart AI mode.</p>
+            <h2>Library resources</h2>
+            <p>Explore library hours, new arrivals, and book requests.</p>
           </div>
           <div class="status-pill">
-            <span id="dailyStatus">Dashboard view active</span>
+            <span id="dailyStatus">Library view active</span>
           </div>
         </section>
 
@@ -745,16 +745,16 @@
             <p>CampusSync keeps the student dashboard updated automatically with attendance, assignment reminders, and campus announcements. Everything is presented clearly so students can focus on learning.</p>
             <div class="list-card" id="announcementList">
               <div class="list-item">
-                <strong>Assignment Reminder: Submit lab report by 6 PM today.</strong>
-                <span class="chip">Dashboard</span>
+                <strong>New AI and data science books added to the library.</strong>
+                <span class="chip">Library</span>
               </div>
               <div class="list-item">
-                <strong>Cultural Fest registration open until Friday.</strong>
-                <span class="chip">Dashboard</span>
+                <strong>Library hours extended during exam week.</strong>
+                <span class="chip">Library</span>
               </div>
               <div class="list-item">
-                <strong>Library hours updated from Monday.</strong>
-                <span class="chip">Dashboard</span>
+                <strong>Digital resource access has been updated.</strong>
+                <span class="chip">Library</span>
               </div>
             </div>
           </div>
@@ -788,7 +788,7 @@
 
         <section class="panel">
           <h3>Live auto update log</h3>
-          <p id="logText">Viewing the Dashboard section in CampusSync.</p>
+          <p id="logText">Viewing the Library section in CampusSync.</p>
         </section>
       </main>
     </div>
@@ -804,9 +804,9 @@
       userName: 'Student',
       role: 'Student',
       announcements: [
-        'Assignment Reminder: Submit lab report by 6 PM today.',
-        'Cultural Fest registration open until Friday.',
-        'Library hours updated from Monday.',
+        'New AI and data science books added to the library.',
+        'Library hours extended during exam week.',
+        'Digital resource access has been updated.',
       ],
       logMessages: [
         'Auto update started for daily attendance.',

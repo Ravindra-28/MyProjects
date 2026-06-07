@@ -667,9 +667,9 @@
           <p>AI-powered college ERP for students, faculty, and admins.</p>
         </div>
               <ul class="nav-list">
-        <li class="active"><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
         <li><a href="students.html">Students</a></li>
-        <li><a href="attendance.html">Attendance</a></li>
+        <li class="active"><a href="attendance.html">Attendance</a></li>
         <li><a href="exams.html">Exams</a></li>
         <li><a href="fees.html">Fees</a></li>
         <li><a href="library.html">Library</a></li>
@@ -685,11 +685,11 @@
       <main class="main">
         <section class="topbar">
           <div class="topbar-left">
-            <h2>Welcome back, <span id="greetingName">Student</span></h2>
-            <p>Campus ERP updated automatically in smart AI mode.</p>
+            <h2>Attendance analytics</h2>
+            <p>Track daily attendance and improve classroom participation.</p>
           </div>
           <div class="status-pill">
-            <span id="dailyStatus">Dashboard view active</span>
+            <span id="dailyStatus">Attendance view active</span>
           </div>
         </section>
 
@@ -707,7 +707,7 @@
 
           <article class="card">
             <span>Attendance Rate</span>
-            <strong id="attendanceRate">92%</strong>
+            <strong id="attendanceRate">96%</strong>
             <div class="mini-metrics">
               <div class="metric">
                 <span>Daily goal</span>
@@ -718,7 +718,7 @@
 
           <article class="card">
             <span>Upcoming Classes</span>
-            <strong id="classCount">12</strong>
+            <strong id="classCount">13</strong>
             <div class="mini-metrics">
               <div class="metric">
                 <span>Next lecture</span>
@@ -745,16 +745,16 @@
             <p>CampusSync keeps the student dashboard updated automatically with attendance, assignment reminders, and campus announcements. Everything is presented clearly so students can focus on learning.</p>
             <div class="list-card" id="announcementList">
               <div class="list-item">
-                <strong>Assignment Reminder: Submit lab report by 6 PM today.</strong>
-                <span class="chip">Dashboard</span>
+                <strong>Attendance report generated for today.</strong>
+                <span class="chip">Attendance</span>
               </div>
               <div class="list-item">
-                <strong>Cultural Fest registration open until Friday.</strong>
-                <span class="chip">Dashboard</span>
+                <strong>Absent alerts sent to parents and counselors.</strong>
+                <span class="chip">Attendance</span>
               </div>
               <div class="list-item">
-                <strong>Library hours updated from Monday.</strong>
-                <span class="chip">Dashboard</span>
+                <strong>Attendance trend improved by 3% this week.</strong>
+                <span class="chip">Attendance</span>
               </div>
             </div>
           </div>
@@ -788,7 +788,7 @@
 
         <section class="panel">
           <h3>Live auto update log</h3>
-          <p id="logText">Viewing the Dashboard section in CampusSync.</p>
+          <p id="logText">Viewing the Attendance section in CampusSync.</p>
         </section>
       </main>
     </div>
@@ -798,15 +798,15 @@
     const state = {
       autoMode: true,
       nextRefreshSeconds: 15,
-      attendanceRate: 92,
+      attendanceRate: 96,
       studentCount: 5230,
-      classCount: 12,
+      classCount: 13,
       userName: 'Student',
       role: 'Student',
       announcements: [
-        'Assignment Reminder: Submit lab report by 6 PM today.',
-        'Cultural Fest registration open until Friday.',
-        'Library hours updated from Monday.',
+        'Attendance report generated for today.',
+        'Absent alerts sent to parents and counselors.',
+        'Attendance trend improved by 3% this week.',
       ],
       logMessages: [
         'Auto update started for daily attendance.',
