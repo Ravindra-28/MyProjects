@@ -940,9 +940,148 @@
       askAI();
     }
 
+    function updateSection(section) {
+      const pageData = {
+        Dashboard: {
+          title: `Welcome back, ${state.userName}`,
+          description: 'Campus ERP updated automatically in smart AI mode.',
+          studentCount: 5230,
+          attendanceRate: 92,
+          classCount: 12,
+          announcements: [
+            'Assignment Reminder: Submit lab report by 6 PM today.',
+            'Cultural Fest registration open until Friday.',
+            'Library hours updated from Monday.',
+          ],
+          tag: 'Live',
+        },
+        Students: {
+          title: 'Student directory overview',
+          description: 'Review student profiles, class progress, and campus engagement.',
+          studentCount: 5280,
+          attendanceRate: 94,
+          classCount: 14,
+          announcements: [
+            'New student registrations processed successfully.',
+            'Top performers recognized in the monthly leaderboard.',
+            'Mentorship sessions scheduled for this week.',
+          ],
+          tag: 'Students',
+        },
+        Attendance: {
+          title: 'Attendance analytics',
+          description: 'Track daily attendance and improve classroom participation.',
+          studentCount: 5230,
+          attendanceRate: 96,
+          classCount: 13,
+          announcements: [
+            'Attendance report generated for today.',
+            'Absent alerts sent to parents and counselors.',
+            'Attendance trend improved by 3% this week.',
+          ],
+          tag: 'Attendance',
+        },
+        Exams: {
+          title: 'Exam schedule and results',
+          description: 'View upcoming exams, results, and preparation alerts.',
+          studentCount: 5230,
+          attendanceRate: 91,
+          classCount: 12,
+          announcements: [
+            'Midterm schedule finalized for next Monday.',
+            'Exam hall assignments published to students.',
+            'Study resources available in the AI assistant.',
+          ],
+          tag: 'Exams',
+        },
+        Fees: {
+          title: 'Fees dashboard',
+          description: 'Check fee statuses, dues, and secure payment reminders.',
+          studentCount: 5230,
+          attendanceRate: 92,
+          classCount: 12,
+          announcements: [
+            'Fee due reminders sent to students with pending balances.',
+            'Online payment portal is now faster and secure.',
+            'Scholarship updates are available in the finance panel.',
+          ],
+          tag: 'Fees',
+        },
+        Library: {
+          title: 'Library resources',
+          description: 'Explore library hours, new arrivals, and book requests.',
+          studentCount: 5230,
+          attendanceRate: 92,
+          classCount: 12,
+          announcements: [
+            'New AI and data science books added to the library.',
+            'Library hours extended during exam week.',
+            'Digital resource access has been updated.',
+          ],
+          tag: 'Library',
+        },
+        Placement: {
+          title: 'Placement activity',
+          description: 'Monitor placement drives, offers, and candidate readiness.',
+          studentCount: 5230,
+          attendanceRate: 92,
+          classCount: 12,
+          announcements: [
+            'Placement drive registrations are now open.',
+            'Top companies are scheduled for next month.',
+            'Interview preparation sessions are live.',
+          ],
+          tag: 'Placement',
+        },
+        Support: {
+          title: 'Campus support',
+          description: 'Access campus support, helpdesk, and student services.',
+          studentCount: 5230,
+          attendanceRate: 92,
+          classCount: 12,
+          announcements: [
+            'Support tickets are being handled within 24 hours.',
+            'Live chat is available for urgent campus needs.',
+            'Student service feedback is now easier to submit.',
+          ],
+          tag: 'Support',
+        },
+      };
+
+      const data = pageData[section] || pageData.Dashboard;
+      document.querySelectorAll('.nav-list li').forEach((item) => {
+        item.classList.toggle('active', item.textContent.trim() === section);
+      });
+      document.querySelector('.topbar-left h2').innerHTML = section === 'Dashboard'
+        ? `Welcome back, <span id="greetingName">${state.userName}</span>`
+        : data.title;
+      document.querySelector('.topbar-left p').textContent = data.description;
+      document.getElementById('studentCount').textContent = data.studentCount.toLocaleString();
+      document.getElementById('attendanceRate').textContent = `${data.attendanceRate.toFixed(1)}%`;
+      document.getElementById('classCount').textContent = data.classCount;
+      document.getElementById('dailyStatus').textContent = `${section} view active`;
+      document.getElementById('announcementList').innerHTML = data.announcements
+        .map((item) => `
+          <div class="list-item">
+            <strong>${item}</strong>
+            <span class="chip">${data.tag}</span>
+          </div>
+        `)
+        .join('');
+      document.getElementById('logText').textContent = `Viewing the ${section} section in CampusSync.`;
+    }
+
+    function attachNavHandlers() {
+      document.querySelectorAll('.nav-list li').forEach((item) => {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => updateSection(item.textContent.trim()));
+      });
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       setRole('Student');
       updateUI();
+      attachNavHandlers();
       setInterval(tickTimer, 1000);
     });
   </script>
