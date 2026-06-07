@@ -1,0 +1,941 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusSync AI | College ERP</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --surface: rgba(14, 23, 40, 0.94);
+      --surface-soft: rgba(255, 255, 255, 0.07);
+      --text: #e5eaf5;
+      --muted: #94a3b8;
+      --accent: #5b61ff;
+      --accent-soft: rgba(91, 97, 255, 0.16);
+      --success: #22c55e;
+      --radius: 28px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, rgba(91, 97, 255, 0.16), transparent 24%),
+                  radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.1), transparent 26%),
+                  linear-gradient(180deg, #08101c 0%, #0f172a 100%);
+      color: var(--text);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .login-screen,
+    .dashboard {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+    }
+
+    .dashboard {
+      display: none;
+    }
+
+    .login-panel {
+      width: min(1120px, 100%);
+      border-radius: 36px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.28);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .login-art {
+      padding: 40px;
+      background: linear-gradient(180deg, rgba(91, 97, 255, 0.12), transparent 60%),
+                  radial-gradient(circle at top left, rgba(16, 185, 129, 0.1), transparent 26%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand-tag {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-tag span {
+      display: inline-flex;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .art-header h1 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 3.2rem);
+      line-height: 1.02;
+    }
+
+    .art-header p {
+      margin: 16px 0 0;
+      color: var(--muted);
+      max-width: 400px;
+      line-height: 1.8;
+    }
+
+    .promo-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 30px;
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .promo-card h2 {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+
+    .promo-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .promo-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+    }
+
+    .login-form {
+      padding: 40px;
+      display: grid;
+      gap: 24px;
+      background: rgba(12, 18, 33, 0.98);
+    }
+
+    .login-form h2 {
+      margin: 0;
+      font-size: 2.4rem;
+      letter-spacing: -0.04em;
+    }
+
+    .login-form p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .pill-tabs {
+      display: flex;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .pill-tabs button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 22px;
+      cursor: pointer;
+      color: var(--text);
+      background: rgba(255,255,255,0.08);
+      transition: 0.2s ease;
+      font-weight: 700;
+    }
+
+    .pill-tabs button.active {
+      background: linear-gradient(135deg, #5b61ff, #22c55e);
+      color: #fff;
+    }
+
+    .login-fields {
+      display: grid;
+      gap: 18px;
+    }
+
+    .login-fields label {
+      display: grid;
+      gap: 10px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .login-fields input {
+      width: 100%;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      color: var(--text);
+    }
+
+    .login-fields input::placeholder {
+      color: rgba(226, 232, 240, 0.6);
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .checkbox-row input {
+      width: 18px;
+      height: 18px;
+      accent-color: #5b61ff;
+    }
+
+    .login-action {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .login-action button {
+      border: none;
+      border-radius: 18px;
+      padding: 16px 28px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #5b61ff, #22c55e);
+      color: white;
+      font-weight: 700;
+      min-width: 160px;
+    }
+
+    .login-note {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .developer-note {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .alert {
+      color: #f87171;
+      font-size: 0.95rem;
+      min-height: 20px;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      padding: 32px 24px;
+      background: rgba(12, 18, 33, 0.98);
+      border-right: 1px solid rgba(148, 163, 184, 0.14);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      letter-spacing: -0.04em;
+    }
+
+    .nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .nav-list li {
+      padding: 14px 16px;
+      border-radius: 18px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      color: var(--text);
+    }
+
+    .nav-list li:hover,
+    .nav-list li.active {
+      background: rgba(91, 97, 255, 0.22);
+      color: #fff;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 18px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    .main {
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+    }
+
+    .topbar-left h2 {
+      margin: 0;
+      font-size: 1.9rem;
+    }
+
+    .topbar-left p {
+      color: var(--muted);
+      margin: 8px 0 0;
+    }
+
+    .cards {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      display: grid;
+      gap: 24px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.04);
+      padding: 24px;
+      border-radius: 28px;
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.10);
+    }
+
+    .card span,
+    .panel p,
+    .metric,
+    .developer-note {
+      color: var(--muted);
+    }
+
+    .card strong {
+      display: block;
+      font-size: 2.2rem;
+      margin-bottom: 4px;
+    }
+
+    .mini-metrics {
+      margin-top: 20px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .progress {
+      position: relative;
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #818cf8, #6366f1);
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      border-radius: 32px;
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+
+    .panel h3 {
+      margin-top: 0;
+      font-size: 1.3rem;
+    }
+
+    .panel-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 2fr 1fr;
+    }
+
+    .ai-panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .input-group {
+      display: grid;
+      gap: 14px;
+    }
+
+    .input-group input {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      padding: 16px 18px;
+      font-size: 1rem;
+    }
+
+    .input-group button {
+      width: fit-content;
+      border: none;
+      border-radius: 16px;
+      padding: 14px 24px;
+      color: white;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.2s ease;
+    }
+
+    .input-group button:hover {
+      transform: translateY(-1px);
+    }
+
+    .response-box {
+      min-height: 120px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      padding: 20px;
+      color: var(--text);
+      white-space: pre-wrap;
+      line-height: 1.7;
+    }
+
+    .list-card {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .list-item strong {
+      color: #fff;
+    }
+
+    .chip {
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: rgba(99, 102, 241, 0.14);
+      color: #eef2ff;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .toggle {
+      position: relative;
+      width: 58px;
+      height: 34px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      transition: 0.3s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    .toggle input:checked + .slider {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+    }
+
+    .toggle input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    @media (max-width: 1040px) {
+      .login-panel,
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .login-panel {
+        border-radius: 28px;
+      }
+    }
+
+    @media (max-width: 840px) {
+      .login-art,
+      .login-form,
+      .topbar,
+      .panel-grid,
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .login-art,
+      .login-form {
+        padding: 28px;
+      }
+
+      .cards,
+      .panel-grid {
+        display: grid;
+      }
+    }
+
+    @media (max-width: 660px) {
+      body {
+        padding: 0;
+      }
+
+      .login-panel,
+      .app {
+        width: 100%;
+        border-radius: 0;
+      }
+
+      .login-panel {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section id="loginPage" class="login-screen">
+    <div>
+      <div class="login-panel">
+        <div class="login-art">
+          <div>
+            <div class="brand-tag"><span>CS</span> CampusSync by Ravindra</div>
+            <div class="art-header">
+              <h1>Secure college access made simple.</h1>
+              <p>Log in to access attendance, exams, fees, library, placements, and AI-powered campus assistance in a modern interface.</p>
+            </div>
+          </div>
+
+          <div class="promo-card">
+            <h2>Smart campus login</h2>
+            <p>Designed for students and teachers with a clean, intuitive experience. Your profile, notices, and schedule are only one secure login away.</p>
+            <div class="promo-stats">
+              <div class="stat">
+                <strong>97%</strong>
+                Real-time updates
+              </div>
+              <div class="stat">
+                <strong>2x</strong>
+                Faster access
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form class="login-form" onsubmit="event.preventDefault(); login();">
+          <div>
+            <h2>Login</h2>
+            <p>Welcome to Ravindra's CampusSync portal. Choose your access type and sign in securely.</p>
+          </div>
+
+          <div class="pill-tabs">
+            <button type="button" class="active" id="studentTab" onclick="setRole('Student')">Student</button>
+            <button type="button" id="teacherTab" onclick="setRole('Teacher')">Teacher</button>
+          </div>
+
+          <div class="login-fields">
+            <label>
+              User Name
+              <input type="text" id="loginUser" placeholder="Enter your name" autocomplete="username" />
+            </label>
+            <label>
+              Password
+              <input type="password" id="loginPass" placeholder="Enter your password" autocomplete="current-password" />
+            </label>
+            <div class="checkbox-row">
+              <input type="checkbox" id="robotCheck" />
+              <label for="robotCheck">I'm not a robot</label>
+            </div>
+            <div class="alert" id="loginAlert"></div>
+          </div>
+
+          <div class="login-action">
+            <div class="login-note">Login as <strong id="currentRole">Student</strong></div>
+            <button type="submit">LOGIN</button>
+          </div>
+        </form>
+      </div>
+      <div class="developer-note">Designed and Developed by Ravindra · CampusSync ERP 2026</div>
+    </div>
+  </section>
+
+  <section id="dashboard" class="dashboard">
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <h1>CampusSync</h1>
+          <p>AI-powered college ERP for students, faculty, and admins.</p>
+        </div>
+        <ul class="nav-list">
+          <li class="active">Dashboard</li>
+          <li>Students</li>
+          <li>Attendance</li>
+          <li>Exams</li>
+          <li>Fees</li>
+          <li>Library</li>
+          <li>Placement</li>
+          <li>Support</li>
+        </ul>
+        <div class="sidebar-footer">
+          <strong>Auto Daily Update</strong>
+          <p>CampusSync refreshes attendance, schedules, and announcements automatically in smart mode.</p>
+        </div>
+      </aside>
+
+      <main class="main">
+        <section class="topbar">
+          <div class="topbar-left">
+            <h2>Welcome back, <span id="greetingName">Student</span></h2>
+            <p>Campus ERP updated automatically in smart AI mode.</p>
+          </div>
+          <div class="status-pill">
+            <span id="dailyStatus">Auto mode active</span>
+          </div>
+        </section>
+
+        <section class="cards">
+          <article class="card">
+            <span>Active Students</span>
+            <strong id="studentCount">5,230</strong>
+            <div class="mini-metrics">
+              <div class="metric">
+                <span>Today</span>
+                <strong>+24</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <span>Attendance Rate</span>
+            <strong id="attendanceRate">92%</strong>
+            <div class="mini-metrics">
+              <div class="metric">
+                <span>Daily goal</span>
+                <div class="progress"><span style="width: 92%"></span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <span>Upcoming Classes</span>
+            <strong id="classCount">12</strong>
+            <div class="mini-metrics">
+              <div class="metric">
+                <span>Next lecture</span>
+                <strong>09:00 AM</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <span>AI Update Cycle</span>
+            <strong id="nextRefresh">Auto refresh in 00:15</strong>
+            <div class="mini-metrics">
+              <div class="metric">
+                <span>Mode</span>
+                <span class="chip" id="autoModeChip">Enabled</span>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="grid panel-grid">
+          <div class="panel">
+            <h3>Daily Summary</h3>
+            <p>CampusSync keeps the student dashboard updated automatically with attendance, assignment reminders, and campus announcements. Everything is presented clearly so students can focus on learning.</p>
+            <div class="list-card" id="announcementList">
+              <div class="list-item">
+                <strong>Assignment Reminder: Submit lab report by 6 PM today.</strong>
+                <span class="chip">Due Today</span>
+              </div>
+              <div class="list-item">
+                <strong>Cultural Fest registration open until Friday.</strong>
+                <span class="chip">Open</span>
+              </div>
+              <div class="list-item">
+                <strong>Library hours updated from Monday.</strong>
+                <span class="chip">New</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel ai-panel">
+            <div class="toggle-row">
+              <div>
+                <h3>AI Assistant</h3>
+                <p>Ask Nova anything about your campus schedule, attendance, fees, or exams.</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="autoModeToggle" checked onchange="toggleAutoMode()">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="input-group">
+              <input type="text" id="question" placeholder="Ask your AI assistant anything..." />
+              <div style="display:flex; gap:10px; flex-wrap: wrap;">
+                <button type="button" onclick="setQuickPrompt('Show today\'s attendance summary')">Attendance</button>
+                <button type="button" onclick="setQuickPrompt('What are my upcoming exams?')">Exams</button>
+                <button type="button" onclick="setQuickPrompt('How much fee is due?')">Fees</button>
+              </div>
+              <button type="button" onclick="askAI()">Send to Nova</button>
+            </div>
+
+            <div class="response-box" id="response">NovaAI is ready to help with daily updates.</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3>Live auto update log</h3>
+          <p id="logText">CampusSync is managing schedule and attendance updates automatically. Students see the latest information without manual refresh.</p>
+        </section>
+      </main>
+    </div>
+  </section>
+
+  <script>
+    const state = {
+      autoMode: true,
+      nextRefreshSeconds: 15,
+      attendanceRate: 92,
+      studentCount: 5230,
+      classCount: 12,
+      userName: 'Student',
+      role: 'Student',
+      announcements: [
+        'Assignment Reminder: Submit lab report by 6 PM today.',
+        'Cultural Fest registration open until Friday.',
+        'Library hours updated from Monday.',
+      ],
+      logMessages: [
+        'Auto update started for daily attendance.',
+        'Assignment reminders synced with student profiles.',
+        'Library and placement notices refreshed.',
+      ],
+    };
+
+    function setRole(value) {
+      state.role = value;
+      document.getElementById('currentRole').textContent = value;
+      document.getElementById('studentTab').classList.toggle('active', value === 'Student');
+      document.getElementById('teacherTab').classList.toggle('active', value === 'Teacher');
+    }
+
+    function login() {
+      const userInput = document.getElementById('loginUser').value.trim();
+      const passInput = document.getElementById('loginPass').value.trim();
+      const robotChecked = document.getElementById('robotCheck').checked;
+      const alertBox = document.getElementById('loginAlert');
+
+      if (!userInput) {
+        alertBox.textContent = 'Please enter your name to continue.';
+        return;
+      }
+      if (!passInput) {
+        alertBox.textContent = 'Please enter your password.';
+        return;
+      }
+      if (!robotChecked) {
+        alertBox.textContent = 'Please confirm you are not a robot.';
+        return;
+      }
+      alertBox.textContent = '';
+      state.userName = userInput;
+      document.getElementById('greetingName').textContent = state.userName;
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'grid';
+      updateUI();
+    }
+
+    function formatTimer(seconds) {
+      const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
+      const secs = (seconds % 60).toString().padStart(2, '0');
+      return `${minutes}:${secs}`;
+    }
+
+    function updateUI() {
+      document.getElementById('attendanceRate').textContent = `${state.attendanceRate.toFixed(1)}%`;
+      document.getElementById('studentCount').textContent = state.studentCount.toLocaleString();
+      document.getElementById('classCount').textContent = state.classCount;
+      document.getElementById('nextRefresh').textContent = `Auto refresh in ${formatTimer(state.nextRefreshSeconds)}`;
+      document.getElementById('dailyStatus').textContent = state.autoMode ? 'Auto mode active' : 'Auto mode paused';
+      document.getElementById('autoModeChip').textContent = state.autoMode ? 'Enabled' : 'Paused';
+      document.getElementById('announcementList').innerHTML = state.announcements.map(item => `
+        <div class="list-item">
+          <strong>${item}</strong>
+          <span class="chip">Live</span>
+        </div>
+      `).join('');
+      document.getElementById('logText').textContent = state.logMessages[state.logMessages.length - 1];
+    }
+
+    function toggleAutoMode() {
+      state.autoMode = !state.autoMode;
+      document.getElementById('autoModeToggle').checked = state.autoMode;
+      updateUI();
+    }
+
+    function performRefresh() {
+      if (!state.autoMode) return;
+      state.nextRefreshSeconds = 15;
+      state.attendanceRate = Math.min(100, state.attendanceRate + 0.3);
+      state.studentCount += 1;
+      state.classCount = 11 + Math.floor(Math.random() * 5);
+      const newAnnouncement = `Update ${state.logMessages.length + 1}: System refreshed at ${new Date().toLocaleTimeString()}.`;
+      state.announcements.unshift(newAnnouncement);
+      if (state.announcements.length > 4) state.announcements.pop();
+      state.logMessages.push('Auto mode refreshed campus data for students.');
+      if (state.logMessages.length > 6) state.logMessages.shift();
+      updateUI();
+    }
+
+    function tickTimer() {
+      if (state.autoMode) {
+        state.nextRefreshSeconds -= 1;
+        if (state.nextRefreshSeconds <= 0) {
+          performRefresh();
+        }
+      }
+      updateUI();
+    }
+
+    function askAI() {
+      const question = document.getElementById('question').value.trim();
+      const responseElement = document.getElementById('response');
+      if (!question) {
+        responseElement.textContent = 'Please type a question for NovaAI.';
+        return;
+      }
+
+      const lower = question.toLowerCase();
+      let answer = 'NovaAI is preparing a response...';
+
+      if (lower.includes('attendance')) {
+        answer = `Today's attendance is ${state.attendanceRate.toFixed(1)}% across all programs. Keep up the good work and attend the next class at 9:00 AM.`;
+      } else if (lower.includes('exam')) {
+        answer = 'Upcoming exams are scheduled next week. Check the exam portal for dates and hall details.';
+      } else if (lower.includes('fee')) {
+        answer = 'Your fee status is clear for this semester. Next payment reminder will arrive 10 days before the deadline.';
+      } else if (lower.includes('library')) {
+        answer = 'Library hours are 8 AM to 8 PM today. New book arrivals include AI and data science titles.';
+      } else if (lower.includes('what') || lower.includes('how') || lower.includes('show')) {
+        answer = 'NovaAI can provide attendance, schedule, exam, fee, and campus announcements instantly. Try asking a question about your day.';
+      } else {
+        answer = 'AI Assistant: I found the latest campus summary and daily updates for you. Ask something more specific for a detailed answer.';
+      }
+
+      responseElement.textContent = answer;
+    }
+
+    function setQuickPrompt(text) {
+      document.getElementById('question').value = text;
+      askAI();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setRole('Student');
+      updateUI();
+      setInterval(tickTimer, 1000);
+    });
+  </script>
+</body>
+</html>
