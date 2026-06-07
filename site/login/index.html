@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CampusSync AI | College ERP</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>CampusSync AI | Login</title>
+  <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
   <section id="loginPage" class="login-screen">
@@ -81,16 +81,16 @@
           <p>AI-powered college ERP for students, faculty, and admins.</p>
         </div>
               <ul class="nav-list">
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="students.html">Students</a></li>
-        <li><a href="attendance.html">Attendance</a></li>
-        <li><a href="exams.html">Exams</a></li>
-        <li><a href="fees.html">Fees</a></li>
-        <li><a href="library.html">Library</a></li>
-        <li><a href="placement.html">Placement</a></li>
-        <li class="active"><a href="support.html">Support</a></li>
-              <li><a href="login/">Login</a></li>
-        <li><a href="logs/">Logs</a></li>
+        <li><a href="../dashboard.html">Dashboard</a></li>
+        <li><a href="../students.html">Students</a></li>
+        <li><a href="../attendance.html">Attendance</a></li>
+        <li><a href="../exams.html">Exams</a></li>
+        <li><a href="../fees.html">Fees</a></li>
+        <li><a href="../library.html">Library</a></li>
+        <li><a href="../placement.html">Placement</a></li>
+        <li><a href="../support.html">Support</a></li>
+        <li class="active"><a href="../login/">Login</a></li>
+        <li><a href="../logs/">Logs</a></li>
 </ul>
         <div class="sidebar-footer">
           <strong>Auto Daily Update</strong>
@@ -101,11 +101,11 @@
       <main class="main">
         <section class="topbar">
           <div class="topbar-left">
-            <h2>Campus support</h2>
-            <p>Access campus support, helpdesk, and student services.</p>
+            <h2>Welcome back, <span id="greetingName">Student</span></h2>
+            <p>Campus ERP updated automatically in smart AI mode.</p>
           </div>
           <div class="status-pill">
-            <span id="dailyStatus">Support view active</span>
+            <span id="dailyStatus">Dashboard view active</span>
           </div>
         </section>
 
@@ -161,16 +161,16 @@
             <p>CampusSync keeps the student dashboard updated automatically with attendance, assignment reminders, and campus announcements. Everything is presented clearly so students can focus on learning.</p>
             <div class="list-card" id="announcementList">
               <div class="list-item">
-                <strong>Support tickets are being handled within 24 hours.</strong>
-                <span class="chip">Support</span>
+                <strong>Assignment Reminder: Submit lab report by 6 PM today.</strong>
+                <span class="chip">Dashboard</span>
               </div>
               <div class="list-item">
-                <strong>Live chat is available for urgent campus needs.</strong>
-                <span class="chip">Support</span>
+                <strong>Cultural Fest registration open until Friday.</strong>
+                <span class="chip">Dashboard</span>
               </div>
               <div class="list-item">
-                <strong>Student service feedback is now easier to submit.</strong>
-                <span class="chip">Support</span>
+                <strong>Library hours updated from Monday.</strong>
+                <span class="chip">Dashboard</span>
               </div>
             </div>
           </div>
@@ -204,7 +204,7 @@
 
         <section class="panel">
           <h3>Live auto update log</h3>
-          <p id="logText">Viewing the Support section in CampusSync.</p>
+          <p id="logText">Viewing the Dashboard section in CampusSync.</p>
         </section>
       </main>
     </div>
@@ -221,9 +221,9 @@
       role: 'Student',
       credentials: { username: 'Ravindra19', password: '12345678' },
       announcements: [
-        'Support tickets are being handled within 24 hours.',
-        'Live chat is available for urgent campus needs.',
-        'Student service feedback is now easier to submit.',
+        'Assignment Reminder: Submit lab report by 6 PM today.',
+        'Cultural Fest registration open until Friday.',
+        'Library hours updated from Monday.',
       ],
       logMessages: [
         'Auto update started for daily attendance.',

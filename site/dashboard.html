@@ -89,7 +89,9 @@
         <li><a href="library.html">Library</a></li>
         <li><a href="placement.html">Placement</a></li>
         <li><a href="support.html">Support</a></li>
-      </ul>
+              <li><a href="login/">Login</a></li>
+        <li><a href="logs/">Logs</a></li>
+</ul>
         <div class="sidebar-footer">
           <strong>Auto Daily Update</strong>
           <p>CampusSync refreshes attendance, schedules, and announcements automatically in smart mode.</p>
@@ -217,6 +219,7 @@
       classCount: 12,
       userName: 'Student',
       role: 'Student',
+      credentials: { username: 'Ravindra19', password: '12345678' },
       announcements: [
         'Assignment Reminder: Submit lab report by 6 PM today.',
         'Cultural Fest registration open until Friday.',
@@ -229,6 +232,51 @@
       ],
     };
 
+    const sessionKey = 'campussync_logged_in';
+    const userKey = 'campussync_user';
+
+    function setSession(user) {
+      localStorage.setItem(sessionKey, 'true');
+      localStorage.setItem(userKey, user);
+      const params = new URLSearchParams();
+      params.set('loggedIn', 'true');
+      params.set('user', user);
+      history.replaceState(null, '', location.pathname + '?' + params.toString());
+    }
+
+    function clearSession() {
+      localStorage.removeItem(sessionKey);
+      localStorage.removeItem(userKey);
+    }
+
+    function isLoggedIn() {
+      if (localStorage.getItem(sessionKey) === 'true') return true;
+      const params = new URLSearchParams(location.search);
+      return params.get('loggedIn') === 'true';
+    }
+
+    function getSavedUser() {
+      const stored = localStorage.getItem(userKey);
+      if (stored) return stored;
+      const params = new URLSearchParams(location.search);
+      return params.get('user') || 'Student';
+    }
+
+    function showLoggedInUI() {
+      state.userName = getSavedUser();
+      document.getElementById('greetingName').textContent = state.userName;
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'grid';
+      updateUI();
+      updateNavLinks();
+    }
+
+    function showLoginUI() {
+      document.getElementById('loginPage').style.display = 'block';
+      document.getElementById('dashboard').style.display = 'none';
+      const alertBox = document.getElementById('loginAlert');
+      if (alertBox) alertBox.textContent = '';
+    }
     function setRole(value) {
       state.role = value;
       document.getElementById('currentRole').textContent = value;
@@ -236,7 +284,7 @@
       document.getElementById('teacherTab').classList.toggle('active', value === 'Teacher');
     }
 
-    function login() {
+        function login() {
       const userInput = document.getElementById('loginUser').value.trim();
       const passInput = document.getElementById('loginPass').value.trim();
       const robotChecked = document.getElementById('robotCheck').checked;
@@ -260,10 +308,8 @@
       }
       alertBox.textContent = '';
       state.userName = userInput;
-      document.getElementById('greetingName').textContent = state.userName;
-      document.getElementById('loginPage').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'grid';
-      updateUI();
+      setSession(state.userName);
+      showLoggedInUI();
     }
 
     function formatTimer(seconds) {
@@ -482,7 +528,22 @@
       document.getElementById('logText').textContent = `Viewing the ${section} section in CampusSync.`;
     }
 
+    function updateNavLinks() {
+      document.querySelectorAll('.nav-list li a').forEach((link) => {
+        const base = link.getAttribute('href').split('?')[0];
+        if (isLoggedIn()) {
+          const params = new URLSearchParams();
+          params.set('loggedIn', 'true');
+          params.set('user', state.userName);
+          link.setAttribute('href', `${base}?${params.toString()}`);
+        } else {
+          link.setAttribute('href', base);
+        }
+      });
+    }
+
     function attachNavHandlers() {
+      updateNavLinks();
       document.querySelectorAll('.nav-list li').forEach((item) => {
         item.style.cursor = 'pointer';
         item.addEventListener('click', () => updateSection(item.textContent.trim()));
@@ -491,8 +552,12 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       setRole('Student');
-      updateUI();
       attachNavHandlers();
+      if (isLoggedIn()) {
+        showLoggedInUI();
+      } else {
+        showLoginUI();
+      }
       setInterval(tickTimer, 1000);
     });
   </script>

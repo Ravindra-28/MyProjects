@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CampusSync AI | College ERP</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>CampusSync AI | Logs</title>
+  <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
   <section id="loginPage" class="login-screen">
@@ -81,16 +81,16 @@
           <p>AI-powered college ERP for students, faculty, and admins.</p>
         </div>
               <ul class="nav-list">
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="students.html">Students</a></li>
-        <li><a href="attendance.html">Attendance</a></li>
-        <li><a href="exams.html">Exams</a></li>
-        <li><a href="fees.html">Fees</a></li>
-        <li><a href="library.html">Library</a></li>
-        <li><a href="placement.html">Placement</a></li>
-        <li class="active"><a href="support.html">Support</a></li>
-              <li><a href="login/">Login</a></li>
-        <li><a href="logs/">Logs</a></li>
+        <li><a href="../dashboard.html">Dashboard</a></li>
+        <li><a href="../students.html">Students</a></li>
+        <li><a href="../attendance.html">Attendance</a></li>
+        <li><a href="../exams.html">Exams</a></li>
+        <li><a href="../fees.html">Fees</a></li>
+        <li><a href="../library.html">Library</a></li>
+        <li><a href="../placement.html">Placement</a></li>
+        <li><a href="../support.html">Support</a></li>
+        <li><a href="../login/">Login</a></li>
+              <li class="active"><a href="../logs/">Logs</a></li>
 </ul>
         <div class="sidebar-footer">
           <strong>Auto Daily Update</strong>
@@ -101,54 +101,51 @@
       <main class="main">
         <section class="topbar">
           <div class="topbar-left">
-            <h2>Campus support</h2>
-            <p>Access campus support, helpdesk, and student services.</p>
+            <h2>Login & System Logs</h2>
+            <p>Review login history, audit events, and system access details across CampusSync.</p>
           </div>
           <div class="status-pill">
-            <span id="dailyStatus">Support view active</span>
+            <span id="dailyStatus">Logs view active</span>
           </div>
         </section>
 
-        <section class="cards">
+                <section class="cards">
           <article class="card">
-            <span>Active Students</span>
-            <strong id="studentCount">5,230</strong>
+            <span>Recent Logins</span>
+            <strong id="studentCount">12</strong>
             <div class="mini-metrics">
               <div class="metric">
                 <span>Today</span>
-                <strong>+24</strong>
+                <strong>+3</strong>
               </div>
             </div>
           </article>
-
           <article class="card">
-            <span>Attendance Rate</span>
-            <strong id="attendanceRate">92%</strong>
+            <span>Security Events</span>
+            <strong id="attendanceRate">5</strong>
             <div class="mini-metrics">
               <div class="metric">
-                <span>Daily goal</span>
-                <div class="progress"><span style="width: 92%"></span></div>
+                <span>Alerts</span>
+                <strong>2</strong>
               </div>
             </div>
           </article>
-
           <article class="card">
-            <span>Upcoming Classes</span>
-            <strong id="classCount">12</strong>
+            <span>Successful Logins</span>
+            <strong id="classCount">11</strong>
             <div class="mini-metrics">
               <div class="metric">
-                <span>Next lecture</span>
-                <strong>09:00 AM</strong>
+                <span>Verified</span>
+                <strong>Yes</strong>
               </div>
             </div>
           </article>
-
           <article class="card">
-            <span>AI Update Cycle</span>
+            <span>Login Activity</span>
             <strong id="nextRefresh">Auto refresh in 00:15</strong>
             <div class="mini-metrics">
               <div class="metric">
-                <span>Mode</span>
+                <span>Status</span>
                 <span class="chip" id="autoModeChip">Enabled</span>
               </div>
             </div>
@@ -157,30 +154,29 @@
 
         <section class="grid panel-grid">
           <div class="panel">
-            <h3>Daily Summary</h3>
-            <p>CampusSync keeps the student dashboard updated automatically with attendance, assignment reminders, and campus announcements. Everything is presented clearly so students can focus on learning.</p>
+            <h3>Login History</h3>
+            <p>Track secure access events and recent sign-ins for CampusSync Campus ERP.</p>
             <div class="list-card" id="announcementList">
               <div class="list-item">
-                <strong>Support tickets are being handled within 24 hours.</strong>
-                <span class="chip">Support</span>
+                <strong>Login success — Ravindra19</strong>
+                <span class="chip">Today</span>
               </div>
               <div class="list-item">
-                <strong>Live chat is available for urgent campus needs.</strong>
-                <span class="chip">Support</span>
+                <strong>System audit completed</strong>
+                <span class="chip">Security</span>
               </div>
               <div class="list-item">
-                <strong>Student service feedback is now easier to submit.</strong>
-                <span class="chip">Support</span>
+                <strong>Unauthorized access block logged</strong>
+                <span class="chip">Alert</span>
               </div>
             </div>
-          </div>
           </div>
 
           <div class="panel ai-panel">
             <div class="toggle-row">
               <div>
                 <h3>AI Assistant</h3>
-                <p>Ask Nova anything about your campus schedule, attendance, fees, or exams.</p>
+                <p>Ask Nova about login history, campus security, or recent access events.</p>
               </div>
               <label class="toggle">
                 <input type="checkbox" id="autoModeToggle" checked onchange="toggleAutoMode()">
@@ -191,20 +187,19 @@
             <div class="input-group">
               <input type="text" id="question" placeholder="Ask your AI assistant anything..." />
               <div style="display:flex; gap:10px; flex-wrap: wrap;">
-                <button type="button" onclick="setQuickPrompt('Show today\'s attendance summary')">Attendance</button>
-                <button type="button" onclick="setQuickPrompt('What are my upcoming exams?')">Exams</button>
-                <button type="button" onclick="setQuickPrompt('How much fee is due?')">Fees</button>
+                <button type="button" onclick="setQuickPrompt('Show today's login history')">Login</button>
+                <button type="button" onclick="setQuickPrompt('What are the latest security events?')">Security</button>
+                <button type="button" onclick="setQuickPrompt('How many logins were successful today?')">Activity</button>
               </div>
               <button type="button" onclick="askAI()">Send to Nova</button>
             </div>
 
-            <div class="response-box" id="response">NovaAI is ready to help with daily updates.</div>
+            <div class="response-box" id="response">NovaAI is ready to help with login and security questions.</div>
           </div>
         </section>
-
-        <section class="panel">
+<section class="panel">
           <h3>Live auto update log</h3>
-          <p id="logText">Viewing the Support section in CampusSync.</p>
+          <p id="logText">Viewing the Logs section in CampusSync.</p>
         </section>
       </main>
     </div>
@@ -221,9 +216,9 @@
       role: 'Student',
       credentials: { username: 'Ravindra19', password: '12345678' },
       announcements: [
-        'Support tickets are being handled within 24 hours.',
-        'Live chat is available for urgent campus needs.',
-        'Student service feedback is now easier to submit.',
+        'Assignment Reminder: Submit lab report by 6 PM today.',
+        'Cultural Fest registration open until Friday.',
+        'Library hours updated from Monday.',
       ],
       logMessages: [
         'Auto update started for daily attendance.',
